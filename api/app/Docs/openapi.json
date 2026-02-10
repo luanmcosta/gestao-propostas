@@ -1,0 +1,1087 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Gestao de Propostas API",
+        "description": "API REST para gestao de propostas.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
+    "paths": {
+        "/api/v1/clientes": {
+            "post": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Cria um cliente",
+                "operationId": "253886e2e0b3fc3fcbb8dcccab29d1c1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/clientes/{id}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Detalha um cliente",
+                "operationId": "557b6c7a84cc47a6ee329309061a93a5",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/propostas": {
+            "get": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Lista propostas",
+                "operationId": "6f82ee420dfc54b6daeaba46a931b2e8",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/status"
+                    },
+                    {
+                        "$ref": "#/components/parameters/origem"
+                    },
+                    {
+                        "$ref": "#/components/parameters/cliente_id"
+                    },
+                    {
+                        "$ref": "#/components/parameters/produto"
+                    },
+                    {
+                        "$ref": "#/components/parameters/min_valor"
+                    },
+                    {
+                        "$ref": "#/components/parameters/max_valor"
+                    },
+                    {
+                        "$ref": "#/components/parameters/created_from"
+                    },
+                    {
+                        "$ref": "#/components/parameters/created_to"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "$ref": "#/components/parameters/direction"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/per_page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de propostas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PropostaList"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Cria uma proposta",
+                "operationId": "64522b99bfedef89fa78a10474edb031",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/IdempotencyKey"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropostaInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Proposta criada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/propostas/{id}": {
+            "get": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Detalha uma proposta",
+                "operationId": "8bec26a46847849e8842e487ac9e8bee",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Proposta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Exclusao logica de proposta",
+                "operationId": "0a9ed1b0be7e3981c7d286f849cd65d3",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropostaDelete"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Proposta excluida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Atualiza campos sensiveis",
+                "operationId": "fc6f226c3034bc079d91cbf03a981df8",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropostaUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Proposta atualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/propostas/{id}/submit": {
+            "post": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Submete proposta",
+                "operationId": "ee51801db7f92e3777792ef76b00f3cf",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    },
+                    {
+                        "$ref": "#/components/parameters/IdempotencyKey"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropostaVersion"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Proposta submetida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/propostas/{id}/approve": {
+            "post": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Aprova proposta",
+                "operationId": "6a94db4b3b15e379af275713953b1356",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropostaVersion"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Proposta aprovada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/propostas/{id}/reject": {
+            "post": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Rejeita proposta",
+                "operationId": "e52d6870800277dab819df44a2b0121a",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropostaVersion"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Proposta rejeitada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/propostas/{id}/cancel": {
+            "post": {
+                "tags": [
+                    "Propostas"
+                ],
+                "summary": "Cancela proposta",
+                "operationId": "4f712ba80472d5a3bfd5006d343f40c8",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PropostaVersion"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Proposta cancelada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Proposta"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/propostas/{id}/auditoria": {
+            "get": {
+                "tags": [
+                    "Auditoria"
+                ],
+                "summary": "Lista auditoria",
+                "operationId": "085c8fc901bc941b6e7e9747b420ba07",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/per_page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Auditoria",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuditoriaList"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ClienteInput": {
+                "required": [
+                    "nome",
+                    "email",
+                    "documento"
+                ],
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "documento": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Cliente": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "documento": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PropostaInput": {
+                "required": [
+                    "cliente_id",
+                    "produto",
+                    "valor_mensal",
+                    "origem"
+                ],
+                "properties": {
+                    "cliente_id": {
+                        "type": "integer"
+                    },
+                    "produto": {
+                        "type": "string"
+                    },
+                    "valor_mensal": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "origem": {
+                        "type": "string",
+                        "enum": [
+                            "APP",
+                            "SITE",
+                            "API"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "PropostaUpdate": {
+                "required": [
+                    "versao"
+                ],
+                "properties": {
+                    "versao": {
+                        "type": "integer"
+                    },
+                    "produto": {
+                        "type": "string"
+                    },
+                    "valor_mensal": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "origem": {
+                        "type": "string",
+                        "enum": [
+                            "APP",
+                            "SITE",
+                            "API"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "PropostaDelete": {
+                "required": [
+                    "versao"
+                ],
+                "properties": {
+                    "versao": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "PropostaVersion": {
+                "required": [
+                    "versao"
+                ],
+                "properties": {
+                    "versao": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Proposta": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "cliente_id": {
+                        "type": "integer"
+                    },
+                    "produto": {
+                        "type": "string"
+                    },
+                    "valor_mensal": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "DRAFT",
+                            "SUBMITTED",
+                            "APPROVED",
+                            "REJECTED",
+                            "CANCELED"
+                        ]
+                    },
+                    "origem": {
+                        "type": "string",
+                        "enum": [
+                            "APP",
+                            "SITE",
+                            "API"
+                        ]
+                    },
+                    "versao": {
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PropostaList": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Proposta"
+                        }
+                    },
+                    "meta": {
+                        "properties": {
+                            "page": {
+                                "type": "integer"
+                            },
+                            "per_page": {
+                                "type": "integer"
+                            },
+                            "total": {
+                                "type": "integer"
+                            },
+                            "page_count": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Auditoria": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "proposta_id": {
+                        "type": "integer"
+                    },
+                    "actor": {
+                        "type": "string"
+                    },
+                    "evento": {
+                        "type": "string"
+                    },
+                    "payload": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AuditoriaList": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Auditoria"
+                        }
+                    },
+                    "meta": {
+                        "properties": {
+                            "page": {
+                                "type": "integer"
+                            },
+                            "per_page": {
+                                "type": "integer"
+                            },
+                            "total": {
+                                "type": "integer"
+                            },
+                            "page_count": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorResponse": {
+                "properties": {
+                    "status": {
+                        "type": "integer"
+                    },
+                    "error": {
+                        "type": "integer"
+                    },
+                    "messages": {
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "IdempotencyKey": {
+                "name": "Idempotency-Key",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "status": {
+                "name": "status",
+                "in": "query",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "origem": {
+                "name": "origem",
+                "in": "query",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "cliente_id": {
+                "name": "cliente_id",
+                "in": "query",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "produto": {
+                "name": "produto",
+                "in": "query",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "min_valor": {
+                "name": "min_valor",
+                "in": "query",
+                "schema": {
+                    "type": "number",
+                    "format": "float"
+                }
+            },
+            "max_valor": {
+                "name": "max_valor",
+                "in": "query",
+                "schema": {
+                    "type": "number",
+                    "format": "float"
+                }
+            },
+            "created_from": {
+                "name": "created_from",
+                "in": "query",
+                "schema": {
+                    "type": "string",
+                    "format": "date"
+                }
+            },
+            "created_to": {
+                "name": "created_to",
+                "in": "query",
+                "schema": {
+                    "type": "string",
+                    "format": "date"
+                }
+            },
+            "sort": {
+                "name": "sort",
+                "in": "query",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "direction": {
+                "name": "direction",
+                "in": "query",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "page": {
+                "name": "page",
+                "in": "query",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "per_page": {
+                "name": "per_page",
+                "in": "query",
+                "schema": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Clientes"
+        },
+        {
+            "name": "Propostas"
+        },
+        {
+            "name": "Auditoria"
+        }
+    ]
+}
