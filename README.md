@@ -47,6 +47,7 @@ docker compose down
 ## Migrations e seed
 
 - `composer install` e `php spark migrate` ja rodam automaticamente no startup do container `api`.
+- Em `CI_ENVIRONMENT=development`, o `php spark openapi:generate` tambem roda automaticamente no startup da API.
 - Seed agora e manual (quando quiser popular dados de exemplo):
 
 ```bash

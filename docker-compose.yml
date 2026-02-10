@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: gestao-propostas-api
     working_dir: /var/www/html
-    command: sh -c "composer install --no-interaction && php spark migrate && php -S 0.0.0.0:8080 -t public public/index.php"
+    command: sh -c "composer install --no-interaction && php spark migrate && if [ \"$CI_ENVIRONMENT\" = \"development\" ]; then php spark openapi:generate; fi && php -S 0.0.0.0:8080 -t public public/index.php"
     volumes:
       - ./api:/var/www/html
       - api_vendor:/var/www/html/vendor
