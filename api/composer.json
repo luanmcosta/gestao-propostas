@@ -41,7 +41,7 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "phpunit --no-coverage",
         "lint": "phpcs --standard=phpcs.xml app tests",
         "lint:fix": "phpcbf --standard=phpcs.xml app tests"
     }

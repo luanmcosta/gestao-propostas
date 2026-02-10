@@ -1,0 +1,12 @@
+{
+  "name": "gestao-propostas-hooks",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "precommit:api": "cd api && npm run check",
+    "prepush:api": "cd api && composer test"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
+}
