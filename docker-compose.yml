@@ -1,0 +1,56 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: gestao-propostas-api
+    working_dir: /var/www/html
+    command: sh -c "composer install --no-interaction && php spark migrate && php spark db:seed DatabaseSeeder && php spark serve --host=0.0.0.0 --port=8080"
+    volumes:
+      - ./api:/var/www/html
+      - api_vendor:/var/www/html/vendor
+    ports:
+      - "8080:8080"
+    environment:
+      CI_ENVIRONMENT: development
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  redis:
+    image: redis:7-alpine
+    container_name: gestao-propostas-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: gestao-propostas-worker
+    working_dir: /var/www/html
+    profiles: ["worker"]
+    command: sh -c "composer install --no-interaction && php spark queue:work"
+    volumes:
+      - ./api:/var/www/html
+      - api_vendor:/var/www/html/vendor
+    environment:
+      CI_ENVIRONMENT: development
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      redis:
+        condition: service_healthy
+
+volumes:
+  redis_data:
+  api_vendor:

@@ -1,0 +1,7 @@
+.git
+vendor
+writable/cache/*
+writable/logs/*
+writable/session/*
+writable/debugbar/*
+.env
