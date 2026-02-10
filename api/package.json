@@ -1,0 +1,12 @@
+{
+  "name": "gestao-propostas-api",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write \"app/**/*.php\" \"tests/**/*.php\"",
+    "format:check": "prettier --check \"app/**/*.php\" \"tests/**/*.php\""
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.24.0",
+    "prettier": "^3.6.2"
+  }
+}

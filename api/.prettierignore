@@ -1,0 +1,5 @@
+vendor/
+writable/
+builds/
+app/Views/errors/
+app/Docs/openapi.json
