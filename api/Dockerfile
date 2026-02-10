@@ -7,6 +7,7 @@ RUN apt-get update \
         unzip \
         libzip-dev \
         libicu-dev \
+        libsqlite3-dev \
         default-mysql-client \
     && docker-php-ext-install intl mysqli pdo pdo_mysql pdo_sqlite zip \
     && pecl install redis \
