@@ -3,7 +3,9 @@
 namespace App\Controllers\Api\V1;
 
 use App\Controllers\BaseController;
+use App\Domain\Events\ClienteCadastradoEvent;
 use App\Models\ClienteModel;
+use App\Services\DomainEventPublisher;
 use CodeIgniter\API\ResponseTrait;
 use OpenApi\Annotations as OA;
 
@@ -11,9 +13,12 @@ class ClientesController extends BaseController
 {
     use ResponseTrait;
 
+    private DomainEventPublisher $events;
+
     public function __construct()
     {
         $this->format = 'json';
+        $this->events = service('domainEventPublisher');
     }
 
     /**
@@ -48,6 +53,13 @@ class ClientesController extends BaseController
         ], true);
 
         $cliente = $model->find($id);
+        $this->events->publish(new ClienteCadastradoEvent(
+            (int) $cliente['id'],
+            (string) $cliente['nome'],
+            (string) $cliente['email'],
+            (string) $cliente['documento'],
+            $this->actor()
+        ));
 
         return $this->respondCreated($cliente);
     }
@@ -72,5 +84,12 @@ class ClientesController extends BaseController
         }
 
         return $this->respond($cliente);
+    }
+
+    private function actor(): string
+    {
+        $actor = $this->request->getHeaderLine('X-Actor');
+
+        return $actor !== '' ? $actor : 'system';
     }
 }

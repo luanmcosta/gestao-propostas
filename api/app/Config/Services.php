@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Services\DomainEventPublisher;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -19,14 +20,12 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
-    /*
-     * public static function example($getShared = true)
-     * {
-     *     if ($getShared) {
-     *         return static::getSharedInstance('example');
-     *     }
-     *
-     *     return new \CodeIgniter\Example();
-     * }
-     */
+    public static function domainEventPublisher(bool $getShared = true): DomainEventPublisher
+    {
+        if ($getShared) {
+            return static::getSharedInstance('domainEventPublisher');
+        }
+
+        return new DomainEventPublisher();
+    }
 }

@@ -3,8 +3,11 @@
 namespace App\Controllers\Api\V1;
 
 use App\Controllers\BaseController;
+use App\Domain\Events\PropostaEnviadaEvent;
+use App\Domain\Events\PropostaStatusAlteradaEvent;
 use App\Models\PropostaAuditoriaModel;
 use App\Models\PropostaModel;
+use App\Services\DomainEventPublisher;
 use App\Services\IdempotencyService;
 use App\Services\PropostaAuditService;
 use App\Services\PropostaService;
@@ -19,6 +22,7 @@ class PropostasController extends BaseController
     private PropostaAuditService $audit;
     private PropostaService $service;
     private IdempotencyService $idempotency;
+    private DomainEventPublisher $events;
 
     public function __construct()
     {
@@ -27,6 +31,7 @@ class PropostasController extends BaseController
         $this->audit = new PropostaAuditService();
         $this->service = new PropostaService();
         $this->idempotency = new IdempotencyService();
+        $this->events = service('domainEventPublisher');
     }
 
     /**
@@ -504,6 +509,27 @@ class PropostasController extends BaseController
         ]);
 
         $updated = $this->propostas->find($id);
+        $actor = $this->actor();
+
+        if ($targetStatus === PropostaService::STATUS_SUBMITTED) {
+            $this->events->publish(new PropostaEnviadaEvent(
+                (int) $updated['id'],
+                (int) $updated['cliente_id'],
+                (int) $updated['versao'],
+                $actor
+            ));
+        }
+
+        if (in_array($targetStatus, [PropostaService::STATUS_APPROVED, PropostaService::STATUS_REJECTED, PropostaService::STATUS_CANCELED], true)) {
+            $this->events->publish(new PropostaStatusAlteradaEvent(
+                (int) $updated['id'],
+                (int) $updated['cliente_id'],
+                $from,
+                $targetStatus,
+                (int) $updated['versao'],
+                $actor
+            ));
+        }
 
         if ($requireIdempotency) {
             $scope = 'propostas:submit:' . $id;

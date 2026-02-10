@@ -2,6 +2,9 @@
 
 namespace Config;
 
+use App\Domain\Events\DomainEvent;
+use App\Listeners\DomainEventLoggerListener;
+use App\Listeners\DomainEventRelayListener;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
@@ -52,4 +55,9 @@ Events::on('pre_system', static function (): void {
             });
         }
     }
+});
+
+Events::on('domain.event', static function (DomainEvent $event): void {
+    (new DomainEventLoggerListener())->handle($event);
+    (new DomainEventRelayListener())->handle($event);
 });
