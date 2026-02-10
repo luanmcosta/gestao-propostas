@@ -7,6 +7,7 @@ Atalho rapido para o README da API: [`api/README.md`](api/README.md)
 ## Stack local
 
 - API: PHP 8.2 + CodeIgniter 4 (`api`)
+- MySQL: `mysql:8.4`
 - Redis: `redis:7-alpine`
 - Worker opcional para filas (profile `worker`)
 
@@ -68,15 +69,18 @@ As variaveis sao passadas pelo `docker-compose.yml` para o container `api`.
 
 - `CI_ENVIRONMENT=development`
 - `app_baseURL=http://localhost:8080/`
-- `database_default_DBDriver=SQLite3`
-- `database_default_database=/var/www/html/writable/database.sqlite`
-- `database_default_foreignKeys=true`
+- `database_default_DBDriver=MySQLi`
+- `database_default_hostname=mysql`
+- `database_default_port=3306`
+- `database_default_database=gestao_propostas`
+- `database_default_username=gestao`
+- `database_default_password=gestao`
 - `cache_redis_host=redis`
 - `cache_redis_port=6379`
 - `REDIS_HOST=redis` (opcional para codigo custom)
 - `REDIS_PORT=6379` (opcional para codigo custom)
 
-### CodeIgniter (quando trocar para MySQL/PostgreSQL)
+### CodeIgniter (parametros comuns)
 
 As chaves abaixo seguem o formato aceito pelo `api/env`:
 

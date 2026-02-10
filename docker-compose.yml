@@ -1,4 +1,22 @@
 services:
+  mysql:
+    image: mysql:8.4
+    container_name: gestao-propostas-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: gestao_propostas
+      MYSQL_USER: gestao
+      MYSQL_PASSWORD: gestao
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   api:
     build:
       context: ./api
@@ -14,9 +32,14 @@ services:
     environment:
       CI_ENVIRONMENT: development
       app_baseURL: http://localhost:8080/
-      database_default_DBDriver: SQLite3
-      database_default_database: /var/www/html/writable/database.sqlite
-      database_default_foreignKeys: "true"
+      database_default_DBDriver: MySQLi
+      database_default_hostname: mysql
+      database_default_port: 3306
+      database_default_database: gestao_propostas
+      database_default_username: gestao
+      database_default_password: gestao
+      database_default_charset: utf8mb4
+      database_default_DBCollat: utf8mb4_general_ci
       cache_handler: predis
       session_driver: 'CodeIgniter\Session\Handlers\RedisHandler'
       session_savePath: 'tcp://redis:6379?database=1&prefix=ci_session:'
@@ -27,6 +50,8 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
     depends_on:
+      mysql:
+        condition: service_healthy
       redis:
         condition: service_healthy
 
@@ -57,9 +82,14 @@ services:
     environment:
       CI_ENVIRONMENT: development
       app_baseURL: http://localhost:8080/
-      database_default_DBDriver: SQLite3
-      database_default_database: /var/www/html/writable/database.sqlite
-      database_default_foreignKeys: "true"
+      database_default_DBDriver: MySQLi
+      database_default_hostname: mysql
+      database_default_port: 3306
+      database_default_database: gestao_propostas
+      database_default_username: gestao
+      database_default_password: gestao
+      database_default_charset: utf8mb4
+      database_default_DBCollat: utf8mb4_general_ci
       cache_handler: predis
       session_driver: 'CodeIgniter\Session\Handlers\RedisHandler'
       session_savePath: 'tcp://redis:6379?database=1&prefix=ci_session:'
@@ -70,9 +100,12 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
     depends_on:
+      mysql:
+        condition: service_healthy
       redis:
         condition: service_healthy
 
 volumes:
+  mysql_data:
   redis_data:
   api_vendor:
