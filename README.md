@@ -2,6 +2,8 @@
 
 API em CodeIgniter 4 com Docker Compose para desenvolvimento local.
 
+Atalho rapido para o README da API: [`api/README.md`](api/README.md)
+
 ## Stack local
 
 - API: PHP 8.2 + CodeIgniter 4 (`api`)
