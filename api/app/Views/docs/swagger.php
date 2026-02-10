@@ -16,9 +16,9 @@
 
 <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
 <script>
-  window.onload = () => {
+    window.onload = () => {
     window.ui = SwaggerUIBundle({
-      url: '/docs/openapi.json',
+      url: '<?= site_url('docs/openapi.json') ?>',
       dom_id: '#swagger-ui',
       deepLinking: true,
       presets: [
