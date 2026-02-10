@@ -8,6 +8,8 @@ RUN apt-get update \
         libzip-dev \
         libicu-dev \
     && docker-php-ext-install intl pdo pdo_sqlite zip \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     && rm -rf /var/lib/apt/lists/*
 
 # Composer dentro da imagem

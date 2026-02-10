@@ -61,6 +61,8 @@
 
 # session.driver = 'CodeIgniter\Session\Handlers\FileHandler'
 # session.savePath = null
+# session.driver = 'CodeIgniter\Session\Handlers\RedisHandler'
+# session.savePath = 'tcp://127.0.0.1:6379?database=1&prefix=ci_session:'
 
 #--------------------------------------------------------------------
 # CACHE (REDIS)
@@ -73,6 +75,13 @@
 # cache.redis.password = null
 # cache.redis.database = 0
 # cache.redis.timeout = 0
+
+#--------------------------------------------------------------------
+# RATE LIMIT
+#--------------------------------------------------------------------
+
+# rateLimit.api.capacity = 120
+# rateLimit.api.windowSeconds = 60
 
 #--------------------------------------------------------------------
 # LOGGER
