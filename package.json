@@ -3,6 +3,10 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
+    "dev:up": "npm install && npm --prefix api install && docker compose up --build",
+    "migrate:api": "docker compose exec api php spark migrate",
+    "seed:api": "docker compose exec api php spark db:seed DatabaseSeeder",
+    "test:api": "docker compose exec -T api composer test",
     "precommit:api": "cd api && npm run format && npm run lint",
     "prepush:api": "cd api && composer test"
   },

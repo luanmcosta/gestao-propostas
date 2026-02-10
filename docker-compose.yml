@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: gestao-propostas-api
     working_dir: /var/www/html
-    command: sh -c "composer install --no-interaction && php spark migrate && php spark db:seed DatabaseSeeder && php spark serve --host=0.0.0.0 --port=8080"
+    command: sh -c "composer install --no-interaction && php spark migrate && php spark serve --host=0.0.0.0 --port=8080"
     volumes:
       - ./api:/var/www/html
       - api_vendor:/var/www/html/vendor

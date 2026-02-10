@@ -17,9 +17,17 @@ Atalho rapido para o README da API: [`api/README.md`](api/README.md)
 
 ## Como rodar
 
-1. Suba API + Redis:
+1. Suba tudo com bootstrap (instala npm da raiz + npm da API + sobe Docker):
 
 ```bash
+npm run dev:up
+```
+
+Alternativa (sem script):
+
+```bash
+npm install
+npm --prefix api install
 docker compose up --build
 ```
 
@@ -33,6 +41,15 @@ docker compose up --build
 
 ```bash
 docker compose down
+```
+
+## Migrations e seed
+
+- `composer install` e `php spark migrate` ja rodam automaticamente no startup do container `api`.
+- Seed agora e manual (quando quiser popular dados de exemplo):
+
+```bash
+npm run seed:api
 ```
 
 ## Worker (opcional)
