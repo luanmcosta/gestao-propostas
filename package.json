@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "precommit:api": "cd api && npm run check",
+    "precommit:api": "cd api && npm run format && npm run lint",
     "prepush:api": "cd api && composer test"
   },
   "devDependencies": {
